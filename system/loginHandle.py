@@ -10,13 +10,24 @@ class loginModel:
         self.cursor = self.library.cursor()
 
     def authenticate(self,email,passwd):
-        encode = hashlib.md5()
-        m = encode.update("password")
-        print m
-        print passwd
-        print m.hexdigest()
         sql = "select * from user_info where email = '%s'"%str(email)
         staffInfo = self.cursor.execute(sql)
         result = self.cursor.fetchone()
         if result == None:
-            return 2
+            loginInfo = {
+            'code':2,
+            'data':''
+            }
+            return loginInfo
+        if passwd == result[7]:
+            loginInfo = {
+            'code':1,
+            'data':result
+            }
+            return loginInfo
+        else:
+            loginInfo = {
+            'code':0,
+            'data':result
+            }
+            return loginInfo
