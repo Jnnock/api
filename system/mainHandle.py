@@ -11,7 +11,7 @@ class loginHandler(tornado.web.RequestHandler):
     def get(self):
         staffEmail = self.get_argument("email")
         passwd = self.get_argument("password")
-        print loginHandle.authenticate(staffEmail,passwd)
+        print loginHandle.loginModel().authenticate(staffEmail,passwd)
 
 #路由设置
 def make_app():

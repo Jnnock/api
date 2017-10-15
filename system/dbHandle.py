@@ -16,13 +16,13 @@ class selectDB():
     def limit(self,num):
         self.limit = num
 
-    def column(self,desc):
+    def setColumn(self,desc):
         self.column = desc
 
-    def mode(self,desc):
+    def calcuate(self,desc):
         self.mode = desc
 
-    def select(self,data,method):
+    def select(self,data):
         print self
         term = []
         for condition in data:
