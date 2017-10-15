@@ -1,6 +1,6 @@
 #encoding=utf-8
 
-import sys,config,MySQLdb,hashlib
+import sys,config,MySQLdb,time
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
@@ -18,16 +18,32 @@ class loginModel:
             'code':2,
             'data':''
             }
-            return loginInfo
         if passwd == result[7]:
             loginInfo = {
             'code':1,
             'data':result
             }
-            return loginInfo
         else:
             loginInfo = {
             'code':0,
             'data':result
             }
-            return loginInfo
+
+        return loginInfo
+
+    def register(self,email,passwd,name):
+        sql = "insert user_info (`email`,`passwd`,`name`,`time`,`status`) values('%s','%s','%s','%s','1')"%(str(email),str(passwd),str(name),str(time.time()))
+        print sql
+        result = self.cursor.execute(sql)
+        lastID = self.library.insert_id()
+        if result:
+            registerInfo = {
+            'code':1,
+            'ID':lastID
+            }
+        else:
+            registerInfo = {
+            'code':0,
+            'ID':''
+            }
+        return registerInfo
