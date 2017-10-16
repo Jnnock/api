@@ -24,7 +24,7 @@ def getDatabaseUser():
 def getDatabasePwd():
     global pwd
     if pwd == None:
-        pwd = "liu1feng"
+        pwd = "1234"
     return pwd
 
 def getDatabase():

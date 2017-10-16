@@ -28,12 +28,10 @@ class loginModel:
             'code':0,
             'data':result
             }
-
         return loginInfo
 
     def register(self,email,passwd,name):
         sql = "insert user_info (`email`,`passwd`,`name`,`time`,`status`) values('%s','%s','%s','%s','1')"%(str(email),str(passwd),str(name),str(time.time()))
-        print sql
         result = self.cursor.execute(sql)
         lastID = self.library.insert_id()
         if result:
