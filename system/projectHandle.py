@@ -1,6 +1,6 @@
 #encoding=utf-8
 
-import sys,config,MySQLdb,time
+import sys,config,MySQLdb,time,os
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
@@ -10,4 +10,23 @@ class ProjectSet():
         self.cursor = self.library.cursor()
 
     def addProject(self,name,image,desc):
-        sql = "insert into project_list (`name`,`head`,`desc`,`status`,`time`) values ('%s','%s','%s','%s','%s')"%(str())
+        uploadPath = "../storage/project/"
+        filename = "%s+%s"%(str(time.time()),str(image[0]['filename']))
+        filepath = os.path.join(uploadPath, filename)
+        with open(filepath, 'wb') as up:
+            up.write(image[0]['body'])
+        sql = "insert into project_list (`name`,`head`,`desc`,`status`,`time`) values ('%s','%s','%s','1','%s')"%(str(name),str(filename),str(desc),str(time.time()))
+        result = self.cursor.execute(sql)
+        self.library.commit()
+        projectID = self.library.insert_id()
+        if result == 1:
+            createData = {
+            'code':1,
+            'ID':projectID
+            }
+        else:
+            createData = {
+            'code':0,
+            'ID':''
+            }
+        return createData

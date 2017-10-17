@@ -14,7 +14,7 @@ class ApiSet():
         result = self.cursor.execute(sql)
         self.library.commit()
         lastID = self.library.insert_id()
-        if result:
+        if result == 1:
             apiInfo = {
             'code':1,
             'ID':lastID
@@ -30,7 +30,7 @@ class ApiSet():
         sql = "update `api_info` set `name`='%s',`desc`='%s',`return`='%s',`last`='%s',`api`='%s' where id = '%s'"%(str(title),str(desc),str(callback),str(time.time()),str(api),str(apiId))
         result = self.cursor.execute(sql)
         self.library.commit()
-        if result:
+        if result == 1:
             apiInfo = {
             'code':1,
             'ID':apiId,
@@ -46,7 +46,7 @@ class ApiSet():
         sql = "update `api_info` set `status`='0' where id = '%s'"%str(apiId)
         result = self.cursor.execute(sql)
         self.library.commit()
-        if result:
+        if result == 1:
             apiInfo = {
             'code':1,
             }

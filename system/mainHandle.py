@@ -2,16 +2,14 @@
 
 import tornado.ioloop
 import tornado.web
-import MySQLdb,sys,json
-import loginHandle,apiModelHandle
+import MySQLdb,sys,json,os
+import loginHandle,apiModelHandle,projectHandle
 sys.setdefaultencoding('utf-8')
 
 # 登入模块
 class loginHandler(tornado.web.RequestHandler):
     def post(self):
-        staffEmail = self.get_argument("email")
-        passwd = self.get_argument("password")
-        result = loginHandle.loginModel().authenticate(staffEmail,passwd)
+        result = loginHandle.loginModel().authenticate(self.get_argument("email"),self.get_argument("password"))
         if result['code'] == 1:
             data = {
             'code':1,
@@ -27,10 +25,7 @@ class loginHandler(tornado.web.RequestHandler):
 # 注册模块
 class registerHandler(tornado.web.RequestHandler):
     def post(self):
-        staffEmail = self.get_argument("email")
-        passwd = self.get_argument("password")
-        name = self.get_argument("name")
-        result = loginHandle.loginModel().register(staffEmail,passwd,name)
+        result = loginHandle.loginModel().register(self.get_argument("email"),self.get_argument("password"),self.get_argument("name"))
         if result['code'] == 1:
             data = {
             'code':1,
@@ -87,13 +82,46 @@ class editAPIHandler(tornado.web.RequestHandler):
             }
         self.write("%s"%str(json.dumps(data)))
 
+# 创建项目模块
+class createProjectHandler(tornado.web.RequestHandler):
+    def post(self):
+        result = projectHandle.ProjectSet().addProject(self.get_argument("name"),self.request.files.get("image"),self.get_argument("desc"))
+        if result['code'] == 1:
+            data = {
+            'code':1,
+            'data':result['ID']
+            }
+        else:
+            data = {
+            'code':result['code'],
+            'data':''
+            }
+        self.write("%s"%str(json.dumps(data)))
+
+# 获取我的项目模块
+class getProjectHandler(tornado.web.RequestHandler):
+    def get(self):
+        result = projectHandle.ProjectSet().getProjectsByUser(self.get_argument("user"),self.get_argument("type"))
+        if result['code'] == 1:
+            data = {
+            'code':1,
+            data:result['data']
+            }
+        else:
+            data = {
+            'code':result['code'],
+            'data':''
+            }
+        self.write("%s"%str(json.dumps(data)))
 
 #路由设置
 def make_app():
     return tornado.web.Application([
         (r"/login",loginHandler),
         (r"/register",registerHandler),
-        (r"/create/api",createAPIHandler)
+        (r"/create/api",createAPIHandler),
+        (r"/create/project",createProjectHandler),
+        (r"get/projects",getProjectHandler)
     ])
 
 if __name__ == "__main__":
