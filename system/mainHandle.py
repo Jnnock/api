@@ -3,7 +3,7 @@
 import tornado.ioloop
 import tornado.web
 import MySQLdb,sys,json,os
-import loginHandle,apiModelHandle,projectHandle
+import loginHandle,apiModelHandle,projectHandle,userHandle
 sys.setdefaultencoding('utf-8')
 
 # 登入模块
@@ -126,6 +126,19 @@ class getProjectHandler(tornado.web.RequestHandler):
         result = projectHandle.ProjectSet().getProjectsByUser(self.get_argument("user"),self.get_argument("type"))
         self.write("%s"%str(json.dumps(result)))
 
+# 获取用户信息
+class getUserInfoHandler(tornado.web.RequestHandler):
+    def set_default_headers(self):
+        self.set_header('Access-Control-Allow-Origin', '*')
+        self.set_header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
+        self.set_header('Access-Control-Max-Age', 1000)
+        self.set_header('Access-Control-Allow-Headers', '*')
+        self.set_header('Content-type', 'application/json')
+
+    def get(self):
+        result = userHandle.UserSet().getUserInfo(self.get_argument("user"))
+        self.write("%s"%str(json.dumps(result)))
+
 #路由设置
 def make_app():
     return tornado.web.Application([
@@ -133,7 +146,8 @@ def make_app():
         (r"/register",registerHandler),
         (r"/create/api",createAPIHandler),
         (r"/create/project",createProjectHandler),
-        (r"/get/projects",getProjectHandler)
+        (r"/get/projects",getProjectHandler),
+        (r"/get/user",getUserInfoHandler)
     ])
 
 if __name__ == "__main__":
