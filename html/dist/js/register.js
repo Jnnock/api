@@ -6,6 +6,7 @@ document.getElementById("repassword").addEventListener("input",function() {
   var repassword = document.getElementById("repassword").value;
   if (password != repassword) {
     document.getElementById("incorrect").style.display = 'block';
+    document.getElementById("incorrect").innerHTML = "两次密码输入不一致";
     registerStatus = 0;
   } else {
     document.getElementById("incorrect").style.display = 'none';
@@ -26,7 +27,7 @@ document.getElementById("registerBTN").addEventListener("click",function() {
     return;
   }
   var formData = new FormData();
-  var link = requestLink+"/regiser"
+  var link = requestLink+"/register"
   formData.append('email', email);
   formData.append('password', password);
   formData.append('name', name);
@@ -36,7 +37,12 @@ document.getElementById("registerBTN").addEventListener("click",function() {
       if (xhr.status === 200) {
           returnData = eval('(' + xhr.responseText + ')');
           if (returnData['code'] != 1) {
-            alert("账户无效")
+            document.getElementById("incorrect").style.display = 'block';
+            document.getElementById('incorrect').innerHTML = returnData['data'];
+          } else {
+            document.getElementById("incorrect").style.display = 'none';
+            window.localStorage.setItem("ApiSysAccount",returnData['data']);
+            window.location = 'projects.html';
           }
       }
   }

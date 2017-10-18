@@ -88,6 +88,7 @@ CREATE TABLE `project_list` (
   `head` varchar(255) DEFAULT NULL COMMENT '项目头像',
   `desc` text COMMENT '项目描述',
   `status` tinyint(4) DEFAULT NULL COMMENT '项目状态 1=>正常，0=>已删除',
+  `create_id` int(11),
   `time` int(11) DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

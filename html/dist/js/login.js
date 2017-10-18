@@ -17,6 +17,8 @@ document.getElementById("loginBTN").addEventListener("click",function() {
             document.getElementById('incorrect').innerHTML = "<p>账户无效</p>";
           } else {
             document.getElementById("incorrect").style.display = 'none';
+            window.localStorage.setItem("ApiSysAccount",returnData['data']);
+            window.location = 'projects.html';
           }
       }
   }
