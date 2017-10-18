@@ -44,10 +44,10 @@ class loginModel:
             'data':'邮箱已注册，请<a href="login.html">登入</a>'
             }
         else:
-            sql = "insert user_info (`email`,`passwd`,`name`,`time`,`status`) values('%s','%s','%s','%s','1')"%(str(email),str(passwd),str(name),str(time.time()))
+            sql = "insert user_info (`email`,`passwd`,`name`,`time`,`status`,`lasttime`) values('%s','%s','%s','%s','1','%s')"%(str(email),str(passwd),str(name),str(int(time.time())),str(int(time.time())))
             result = self.cursor.execute(sql)
-            self.library.commit()
             lastID = self.library.insert_id()
+            self.library.commit()
             if result == 1:
                 registerInfo = {
                 'code':1,

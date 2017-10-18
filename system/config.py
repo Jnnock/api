@@ -8,6 +8,7 @@ redisDsn = None
 redisPort = None
 redisPwd = None
 apiLink = None
+url = None
 
 def getDatabaseDSN():
     global dsn
@@ -24,7 +25,7 @@ def getDatabaseUser():
 def getDatabasePwd():
     global pwd
     if pwd == None:
-        pwd = "liu1feng"
+        pwd = "1234"
     return pwd
 
 def getDatabase():
@@ -56,3 +57,9 @@ def getApiLink():
     if apiLink == None:
         apiLink = "http://crm.hechuangedu.com/"
     return apiLink
+
+def getUrl():
+    global url
+    if url == None:
+        url = 'http://api.com'
+    return url

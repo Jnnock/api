@@ -100,7 +100,7 @@ class createProjectHandler(tornado.web.RequestHandler):
         self.set_header('Content-type', 'application/json')
 
     def post(self):
-        result = projectHandle.ProjectSet().addProject(self.get_argument("name"),self.request.files.get("image"),self.get_argument("desc"))
+        result = projectHandle.ProjectSet().addProject(self.get_argument("name"),self.request.files.get("image"),self.get_argument("desc"),self.get_argument("user"))
         if result['code'] == 1:
             data = {
             'code':1,
@@ -124,17 +124,7 @@ class getProjectHandler(tornado.web.RequestHandler):
 
     def get(self):
         result = projectHandle.ProjectSet().getProjectsByUser(self.get_argument("user"),self.get_argument("type"))
-        if result['code'] == 1:
-            data = {
-            'code':1,
-            data:result['data']
-            }
-        else:
-            data = {
-            'code':result['code'],
-            'data':''
-            }
-        self.write("%s"%str(json.dumps(data)))
+        self.write("%s"%str(json.dumps(result)))
 
 #路由设置
 def make_app():
@@ -143,7 +133,7 @@ def make_app():
         (r"/register",registerHandler),
         (r"/create/api",createAPIHandler),
         (r"/create/project",createProjectHandler),
-        (r"get/projects",getProjectHandler)
+        (r"/get/projects",getProjectHandler)
     ])
 
 if __name__ == "__main__":
