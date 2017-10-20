@@ -188,75 +188,92 @@
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
-                    <h1>项目列表
-                        <small>说明</small></h1>
+                  <div class="row" style="margin-bottom:10px">
+                    <div class="col-md-1">
+                        <img id="projectImage" src="" width="70px" class="img-circle" />
+                    </div>
+                    <div class="col-md-11">
+                      <h1 style="font-size: 24px;margin-top:3px"><span id="projectName"></span>
+                        <div class="pull-right" style="width:240px">
+                          <div class="row">
+                            <div class="col-md-6">
+                              <div class="btn-group">
+                                <button type="button" class="btn btn-default"><i class="fa fa-plus"></i> | 新建</button>
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                  <span class="caret"></span>
+                                  <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                  <li><a href="javascript:void(0)" id="createProject">项目模块</a></li>
+                                  <li><a href="javascript:void(0)" id="createAPI">API模块</a></li>
+                                </ul>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <a class="btn btn-block btn-social btn-bitbucket">
+                                <i class="fa fa-users"></i> 用户 3
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </h1>
+                      <small id="projectDesc"></small>
+                    </div>
+                  </div>
+                  <div class="box box-default">
+                    <div class="box-body">
+                      <div>XXX修改了搜索模块接口#192.<small class="pull-right">2017-11-11 11:11</small></div>
+                      <small>更新说明：XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</small>
+                    </div>
+                    <!-- /.box-body -->
+                  </div>
                 </section>
                 <!-- Main content -->
-                <section class="invoice" style="margin-top:30px">
-                    <div class="nav-tabs-custom">
-                        <ul class="nav nav-tabs">
-                            <li class="active">
-                                <a href="#tab_1" data-toggle="tab">我创建的</a></li>
-                            <li>
-                                <a href="#tab_2" data-toggle="tab">我参与的</a></li>
-                            <li class="pull-right">
-                                <button type="button" class="btn bg-olive btn-flat" data-toggle="modal" data-target="#myModal">+ 新建项目</button></li>
-                        </ul>
-                        <div class="tab-content">
-                            <div class="tab-pane active" id="tab_1">
+                <section class="content">
+                  <div class="nav-tabs-custom">
+                      <ul class="nav nav-tabs">
+                          <li class="active">
+                              <a href="#tab_1" data-toggle="tab" id="PROJECTMODEL">项目模块</a></li>
+                          <li>
+                              <a href="#tab_2" data-toggle="tab" id="APIMODEL">API模块</a></li>
+                      </ul>
+                      <div class="tab-content">
+                          <div class="tab-pane active" id="tab_1">
 
-                            </div>
-                            <!-- /.tab-pane -->
-                            <div class="tab-pane" id="tab_2">
-                                <!-- title row -->
-                                <div class="row">
-                                    <div class="col-xs-1">
-                                        <img src="dist/adminLTE/img/user1-128x128.jpg" width="55px" class="img-circle" /></div>
-                                    <div class="col-xs-11">
-                                        <h2 class="page-header">项目三
-                                            <div class="pull-right">
-                                                <small class="pull-right">
-                                                    <i class="fa fa-bar-chart" aria-hidden="true"></i>700
-                                                    <i class="fa fa-user" aria-hidden="true"></i>4</small>
-                                                <br />
-                                                <small>上次更新时间: 2017-10-17 11:46</small></div>
-                                            <small>项目说明</small></h2>
-                                    </div>
-                                    <!-- /.col --></div>
-                            </div>
-                        </div>
-                        <!-- /.tab-content --></div>
+                          </div>
+                          <!-- /.tab-pane -->
+                          <div class="tab-pane" id="tab_2">
+
+                          </div>
+                      </div>
+                      <!-- /.tab-content --></div>
                 </section>
                 <!-- /.content -->
                 <div class="clearfix"></div>
             </div>
-            <!-- 新建项目 -->
+            <!-- 新建项目、API -->
             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="myModalLabel">新建项目</h4>
+                            <h4 class="modal-title" id="myModalLabel"></h4>
                         </div>
                         <div class="modal-body">
+                          <input type="hidden" id="createType" value="" />
                           <div class="form-group">
-                            <label for="exampleInputFile">项目图片</label>
-                            <input type="file" name="projectImage" id="projectImage">
-                            <p class="help-block">建议尺寸168*168,大小在2M以内</p>
+                              <label for="exampleInputEmail1" id="nameArea"></label>
+                              <input type="text" name="name" class="form-control" id="name" placeholder="" autocomplete="off">
                           </div>
                           <div class="form-group">
-                              <label for="exampleInputEmail1">项目名称</label>
-                              <input type="text" name="projectName" class="form-control" id="projectName" placeholder="输入项目名称" autocomplete="off">
-                          </div>
-                          <div class="form-group">
-                              <label for="exampleInputEmail1">项目介绍</label>
-                              <textarea class="form-control" nsme="projectDesc" id="projectDesc" placeholder="输入项目介绍"></textarea>
+                              <label for="exampleInputEmail1" id="descArea"></label>
+                              <textarea class="form-control" nsme="desc" id="desc" placeholder=""></textarea>
                           </div>
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-default" id="cancleCreate">取消</button>
-                          <button type="button" id="createProject" class="btn btn-primary">创建</button></div>
+                          <button type="button" id="create" class="btn btn-primary">创建</button></div>
                         </div>
                     </div>
               </div>
@@ -268,14 +285,14 @@
         <script src="dist/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
         <!-- iCheck -->
         <script src="dist/plugins/iCheck/icheck.min.js"></script>
+        <!-- layer -->
+        <script src="dist/plugins/layer/layer.js"></script>
         <!-- config -->
         <script src="dist/js/config.js"></script>
         <!-- init -->
         <script src="dist/js/init.js"></script>
         <!-- request -->
-        <script src="dist/js/projects.js"></script>
-        <!-- layer -->
-        <script src="dist/plugins/layer/layer.js"></script>
+        <script src="dist/js/project.js"></script>
         <!-- FastClick -->
         <script src="dist/bower_components/fastclick/lib/fastclick.js"></script>
     </body>

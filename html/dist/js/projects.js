@@ -1,11 +1,6 @@
 var createLink = requestLink+"/create/project";
 var getLink = requestLink+"/get/projects";
-var getUser = requestLink+"/get/user";
-var userId = window.localStorage.getItem("ApiSysAccount");
-if (!userId) {
-  window.location = "login.html"
-}
-projectListHtml = '<div class="row"><div class="col-xs-1"><img src="PROJECT_IMAGE" width="55px" class="img-circle" /></div><div class="col-xs-11"><h2 class="page-header"><a href="project_detail.html#!PROJECT_ID">PROJECT_NAME</a><div class="pull-right"><small class="pull-right"><i class="fa fa-bar-chart" aria-hidden="true"></i>0<i class="fa fa-user" aria-hidden="true"></i>0</small><br /><small>上次更新时间: 未获取</small></div><small>PROJECT_DESC</small></h2></div><!-- /.col --></div>'
+projectListHtml = '<div class="row" style="padding:0 20px 0 20px"><div class="col-xs-1"><img src="PROJECT_IMAGE" width="55px" class="img-circle" /></div><div class="col-xs-11"><h2 class="page-header"><a href="project.html#!PROJECT_ID">PROJECT_NAME</a><div class="pull-right"><small class="pull-right"><i class="fa fa-bar-chart" aria-hidden="true"> </i> 0 <i class="fa fa-user" aria-hidden="true"> </i> 0 </small><br /><small>上次更新时间: 未获取</small></div><small>PROJECT_DESC</small></h2></div><!-- /.col --></div>'
 window.onload = function() {
   getProjects();
   getUserInfo();
@@ -22,7 +17,7 @@ document.getElementById("createProject").addEventListener("click",function() {
   formData.append('name', name);
   formData.append('desc', desc);
   formData.append('image', image.files[0]);
-  formData.append('user',userId),
+  formData.append('user',userId);
   xhr.open('POST', createLink);
   xhr.onreadystatechange = function () {
       if (xhr.readyState !== 4) return;/*忽略未完成的调用*/
@@ -72,28 +67,6 @@ function getProjects() {
               project = project.replace(/PROJECT_ID/g,returnData['data'][i]['pid']);
               document.getElementById("tab_1").innerHTML += project
             }
-          }
-      }
-  }
-  xhr.send();
-}
-
-/* 获取用户信息 */
-function getUserInfo() {
-  var xhr = new XMLHttpRequest();
-  var getUserInfoLink = getUser + "?user=" + userId;
-  xhr.open('GET', getUserInfoLink);
-  xhr.onreadystatechange = function () {
-      if (xhr.readyState !== 4) return;//忽略未完成的调用
-      if (xhr.status === 200) {
-          returnData = eval('(' + xhr.responseText + ')');
-          if (returnData['code'] == '1') {
-            document.getElementById("userName").innerHTML = returnData['data']['name'];
-            document.getElementById("userImage").setAttribute("src",returnData['data']['image']);
-            document.getElementById("userName2").innerHTML = returnData['data']['name'];
-            document.getElementById("userImage2").setAttribute("src",returnData['data']['image']);
-            document.getElementById("userName3").innerHTML = returnData['data']['name'];
-            document.getElementById("userImage3").setAttribute("src",returnData['data']['image']);
           }
       }
   }

@@ -17,11 +17,13 @@ class UserSet():
             image = "%s/storage/user/%s"%(str(config.getUrl()),str(userInfo[2]))
         else:
             image = "http://ooe5frhzu.bkt.clouddn.com/avatar04.png"
+        regTime = time.strftime("%Y-%m-%d", time.localtime(userInfo[5]))
         data = {
             'code':1,
             'data':{
                 'name':userInfo[1],
-                'image':image
+                'image':image,
+                'regTime':regTime
             }
         }
         return data

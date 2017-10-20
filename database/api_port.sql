@@ -70,10 +70,9 @@ DROP TABLE IF EXISTS `api_model`;
 CREATE TABLE `api_model` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL COMMENT 'API 模块名',
-  `head` varchar(255) DEFAULT NULL COMMENT 'API 模块头像',
+  `project_id` varchar(255) DEFAULT NULL COMMENT '项目ID',
   `desc` text COMMENT 'API 模块描述',
   `status` tinyint(4) DEFAULT NULL COMMENT 'API 模块状态 1=>正常，2=>已删除',
-  `last` int(11) DEFAULT NULL COMMENT '上次更新的commit ID',
   `time` int(11) DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -111,11 +110,12 @@ CREATE TABLE `project_model` (
 --  Table structure for `project_model_user_relation`
 -- ----------------------------
 DROP TABLE IF EXISTS `project_model_user_relation`;
-CREATE TABLE `project_model_user_relation` (
+CREATE TABLE `project_user_relation` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `project_model_id` int(11) NOT NULL COMMENT '项目模块ID',
+  `project_id` int(11) NOT NULL COMMENT '项目模块ID',
   `user_id` varchar(255) DEFAULT NULL COMMENT '用户ID',
   `status` tinyint(4) DEFAULT NULL COMMENT '当前状态，1=>正常，0=>已删除',
+  `relation` tinyint(4) DEFAULT NULL COMMENT '1 => 创建，2 => 邀请',
   `time` int(11) DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
