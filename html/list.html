@@ -16,6 +16,8 @@
         <!-- Theme style -->
         <link rel="stylesheet" href="dist/adminLTE/css/AdminLTE.min.css" />
         <link rel="stylesheet" href="dist/adminLTE/css/skins/_all-skins.min.css" />
+        <!-- DataTables -->
+        <link rel="stylesheet" href="dist/bower_components/datatables/css/dataTables.bootstrap.css">
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -189,64 +191,168 @@
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                   <div class="row" style="margin-bottom:10px">
-                    <div class="col-md-1">
-                        <img id="projectImage" src="" width="70px" class="img-circle" />
-                    </div>
-                    <div class="col-md-11">
-                      <h1 style="font-size: 24px;margin-top:3px"><span id="projectName"></span>
-                        <div class="pull-right" style="width:240px">
+                    <div class="col-md-12">
+                      <h1 style="font-size: 24px;margin-top:3px"><span id="modelName">搜索模块</span>
+                        <div class="pull-right" style="width:110px">
                           <div class="row">
-                            <div class="col-md-6">
-                              <div class="btn-group">
-                                <button type="button" class="btn btn-default"><i class="fa fa-plus"></i> | 新建</button>
-                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                  <span class="caret"></span>
-                                  <span class="sr-only">Toggle Dropdown</span>
-                                </button>
-                                <ul class="dropdown-menu" role="menu">
-                                  <li><a href="javascript:void(0)" id="createProject">项目模块</a></li>
-                                  <li><a href="javascript:void(0)" id="createAPI">API模块</a></li>
-                                </ul>
-                              </div>
-                            </div>
-                            <div class="col-md-6">
-                              <a class="btn btn-block btn-social btn-bitbucket">
-                                <i class="fa fa-users"></i> 用户 3
+                            <div class="col-md-12">
+                              <a class="btn btn-block btn-social btn-vk">
+                                <i class="fa fa-plus"></i> 新建API
                               </a>
                             </div>
                           </div>
                         </div>
                       </h1>
-                      <small id="projectDesc"></small>
+                      <small id="projectDesc">提供数据检索。使用jieba做分词处理，tronado做API开发框架。涉及MySQLdb、tornado-redis模块安装。</small>
                     </div>
-                  </div>
-                  <div class="box box-default">
-                    <div class="box-body">
-                      <div>XXX修改了搜索模块接口#192.<small class="pull-right">2017-11-11 11:11</small></div>
-                      <small>更新说明：XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</small>
-                    </div>
-                    <!-- /.box-body -->
                   </div>
                 </section>
                 <!-- Main content -->
                 <section class="content">
-                  <div class="nav-tabs-custom">
-                      <ul class="nav nav-tabs">
-                          <li class="active">
-                              <a href="#tab_1" data-toggle="tab" id="PROJECTMODEL">项目模块</a></li>
-                          <li>
-                              <a href="#tab_2" data-toggle="tab" id="APIMODEL">API模块</a></li>
-                      </ul>
-                      <div class="tab-content">
-                          <div class="tab-pane active" id="tab_1">
-
-                          </div>
-                          <!-- /.tab-pane -->
-                          <div class="tab-pane" id="tab_2">
-
-                          </div>
+                  <div class="row">
+                    <!-- API列表 -->
+                    <div class="col-md-4">
+                      <div class="box">
+                        <div class="box-header">
+                          <h3 class="box-title">API 列表</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                          <table id="apiData" class="table table-hover table-striped">
+                            <tbody>
+                              <tr>
+                                  <td><div class="icheckbox_flat-blue" aria-checked="false" aria-disabled="false" style="position: relative;"><input type="checkbox" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div></td>
+                                  <td>#192</td>
+                                  <td class="mailbox-star"><a href="javascript:void(0)"><i class="fa fa-star text-yellow"></i></a></td>
+                                  <td class="mailbox-name"><i class="fa fa-user text-blue"></i> 刘一峰</td>
+                                  <td class="mailbox-subject"><a href="javascript:void(0)">获取用户数据</a></td>
+                                  <td class="mailbox-date">2017-10-20 16:05</td>
+                                </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <!-- /.box-body -->
                       </div>
-                      <!-- /.tab-content --></div>
+                      <!-- /.box -->
+                    </div>
+                    <!-- API列表 end -->
+
+                    <!-- API新建/查看/mock -->
+                    <div class="col-md-8">
+                      <div class="box">
+                        <div class="box-header">
+                          <h3 class="box-title">数据搜索</h3>
+                        </div>
+                        <div class="box-body">
+                          <!-- api link start -->
+                          <section class="row">
+                            <div class="col-md-10">
+                              <div class="input-group">
+                                <div class="input-group-btn">
+                                  <button type="button" style="border-radius:0" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-expanded="false">GET
+                                    <span class="fa fa-caret-down"></span>
+                                  </button>
+                                  <ul class="dropdown-menu">
+                                    <li><a href="#">GET</a></li>
+                                    <li><a href="#">POST</a></li>
+                                  </ul>
+                                </div>
+                                <div class="input-group-btn">
+                                  <button type="button" style="border-radius:0" class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><b>http://www.maoer.cc/</b>
+                                    <span class="fa fa-caret-down"></span>
+                                  </button>
+                                  <ul class="dropdown-menu">
+                                    <li><a href="#"><b>http://www.maoer.cc/</b></a></li>
+                                    <li><a href="#"><b>http://www.baidu.com/</b></a></li>
+                                  </ul>
+                                </div>
+                                <!-- /btn-group -->
+                                <input type="text" class="form-control">
+                              </div>
+                            </div>
+                            <div class="col-md-2">
+                              <button type="button" class="btn btn-block btn-info">发送</button>
+                            </div>
+                          </section>
+                          <!-- api link end -->
+                          <section style="margin-top:20px">
+                            <table class="table table-hover table-striped">
+                              <thead>
+                                <tr role="row">
+                                  <th>参数名</th>
+                                  <th>参数类型</th>
+                                  <th>必填</th>
+                                  <th>参数说明</th>
+                                  <th>示例</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td>q</td>
+                                  <td class="mailbox-star">String</td>
+                                  <td class="mailbox-name">是</td>
+                                  <td class="mailbox-subject">搜索词</td>
+                                  <td class="mailbox-date">wang</td>
+                                </tr>
+                                <tr>
+                                  <td>u</td>
+                                  <td class="mailbox-star">Int</td>
+                                  <td class="mailbox-name">是</td>
+                                  <td class="mailbox-subject">用户ID</td>
+                                  <td class="mailbox-date">5</td>
+                                </tr>
+                                <tr>
+                                  <td>r</td>
+                                  <td class="mailbox-star">Int</td>
+                                  <td class="mailbox-name">是</td>
+                                  <td class="mailbox-subject">用户权限</td>
+                                  <td class="mailbox-date">25</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </section>
+
+                          <section>
+                            <div class="nav-tabs-custom">
+                              <ul class="nav nav-tabs pull-right">
+                                <li><a href="#tab_1-1" data-toggle="tab">模拟返回值</a></li>
+                                <li class="active"><a href="#tab_2-2" data-toggle="tab">返回值说明</a></li>
+                                <li class="pull-left header"><i class="fa fa-th"></i> 接口数据</li>
+                              </ul>
+                              <div class="tab-content">
+                                <div class="tab-pane active" id="tab_1-1">
+                                  <b>How to use:</b>
+
+                                  <p>Exactly like the original bootstrap tabs except you should use
+                                    the custom wrapper <code>.nav-tabs-custom</code> to achieve this style.</p>
+                                  A wonderful serenity has taken possession of my entire soul,
+                                  like these sweet mornings of spring which I enjoy with my whole heart.
+                                  I am alone, and feel the charm of existence in this spot,
+                                  which was created for the bliss of souls like mine. I am so happy,
+                                  my dear friend, so absorbed in the exquisite sense of mere tranquil existence,
+                                  that I neglect my talents. I should be incapable of drawing a single stroke
+                                  at the present moment; and yet I feel that I never was a greater artist than now.
+                                </div>
+                                <!-- /.tab-pane -->
+                                <div class="tab-pane" id="tab_2-2">
+                                  The European languages are members of the same family. Their separate existence is a myth.
+                                  For science, music, sport, etc, Europe uses the same vocabulary. The languages only differ
+                                  in their grammar, their pronunciation and their most common words. Everyone realizes why a
+                                  new common language would be desirable: one could refuse to pay expensive translators. To
+                                  achieve this, it would be necessary to have uniform grammar, pronunciation and more common
+                                  words. If several languages coalesce, the grammar of the resulting language is more simple
+                                  and regular than that of the individual languages.
+                                </div>
+                              </div>
+                              <!-- /.tab-content -->
+                            </div>
+                          </section>
+
+                        </div>
+                      </div>
+                    </div>
+                    <!-- API列表 end -->
+                  </div>
                 </section>
                 <!-- /.content -->
                 <div class="clearfix"></div>
@@ -287,14 +393,17 @@
         <script src="dist/plugins/iCheck/icheck.min.js"></script>
         <!-- layer -->
         <script src="dist/plugins/layer/layer.js"></script>
+        <!-- FastClick -->
+        <script src="dist/bower_components/fastclick/lib/fastclick.js"></script>
+        <!-- DataTables -->
+        <script src="dist/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+        <script src="dist/bower_components/datatables/js/dataTables.bootstrap.min.js"></script>
         <!-- config -->
         <script src="dist/js/config.js"></script>
         <!-- init -->
         <script src="dist/js/init.js"></script>
         <!-- request -->
-        <script src="dist/js/project.js"></script>
-        <!-- FastClick -->
-        <script src="dist/bower_components/fastclick/lib/fastclick.js"></script>
+        <script src="dist/js/list.js"></script>
     </body>
 
 </html>
