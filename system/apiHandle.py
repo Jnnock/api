@@ -83,7 +83,7 @@ class ApiSet():
             data = []
             for i in modelsInfo:
                 model = {
-                'name':i[2],
+                'name':i[1],
                 'desc':i[3],
                 'id':i[0]
                 }

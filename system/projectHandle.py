@@ -131,3 +131,42 @@ class ProjectSet():
                 'data':''
             }
         return info
+
+    def getProjectUsers(self,project):
+        sql = "select * from `project_user_relation` where project_id = '%s' and status = 1"%str(project)
+        result = self.cursor.execute(sql)
+        usersID = self.cursor.fetchmany(result)
+        data = []
+        for user in usersID:
+            userSQL = "select * from user_info where id = '%s' and status = 1"%str(user[2])
+            runover = self.cursor.execute(userSQL)
+            userResult = self.cursor.fetchone()
+            if userResult[2] > 0:
+                image = "%s/storage/user/%s"%(str(config.getUrl()),str(userResult[2]))
+            else:
+                image = "http://ooe5frhzu.bkt.clouddn.com/avatar04.png"
+            userInfo = {
+                'name':userResult[1],
+                'image':image,
+                'time':time.strftime("%Y-%m-%d %H:%I", time.localtime(user[5])),
+                'email':userResult[7],
+                'relation':user[4]
+            }
+            data.append(userInfo)
+        info = {
+            'code':1,
+            'data':data
+        }
+        return info
+
+    def getProjectUsersNumber(self,project):
+        sql = "select count(*) from `project_user_relation` where project_id = '%s' and status = 1"%str(project)
+        result = self.cursor.execute(sql)
+        users = self.cursor.fetchone()
+        info = {
+            'code':1,
+            'data': {
+                'number':users[0]
+            }
+        }
+        return info

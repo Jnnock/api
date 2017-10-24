@@ -194,6 +194,30 @@ class getProjectModelsHandler(tornado.web.RequestHandler):
         result = projectHandle.ProjectSet().getProjectModels(self.get_argument('project'))
         self.write("%s"%str(json.dumps(result)))
 
+class getUsersList(tornado.web.RequestHandler):
+    def set_default_headers(self):
+        self.set_header('Access-Control-Allow-Origin', '*')
+        self.set_header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
+        self.set_header('Access-Control-Max-Age', 1000)
+        self.set_header('Access-Control-Allow-Headers', '*')
+        self.set_header('Content-type', 'application/json')
+
+    def get(self):
+        result = projectHandle.ProjectSet().getProjectUsers(self.get_argument("project"))
+        self.write("%s"%str(json.dumps(result)))
+
+class getProjectUsersNumber(tornado.web.RequestHandler):
+    def set_default_headers(self):
+        self.set_header('Access-Control-Allow-Origin', '*')
+        self.set_header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
+        self.set_header('Access-Control-Max-Age', 1000)
+        self.set_header('Access-Control-Allow-Headers', '*')
+        self.set_header('Content-type', 'application/json')
+
+    def get(self):
+        result = projectHandle.ProjectSet().getProjectUsersNumber(self.get_argument("project"))
+        self.write("%s"%str(json.dumps(result)))
+
 #路由设置
 def make_app():
     return tornado.web.Application([
@@ -207,7 +231,9 @@ def make_app():
         (r"/get/project",getProjectHandler),
         (r"/get/user",getUserInfoHandler),
         (r"/get/apiModels",getApiModelsHandler),
-        (r"/get/projectModels",getProjectModelsHandler)
+        (r"/get/projectModels",getProjectModelsHandler),
+        (r"/get/usersList",getUsersList),
+        (r"/get/projectUserNum",getProjectUsersNumber)
     ])
 
 if __name__ == "__main__":

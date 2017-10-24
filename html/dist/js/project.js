@@ -6,6 +6,7 @@ window.onload = function() {
   getUserInfo();
   getProjectModels();
   getProjectInfo();
+  getUsersNum();
 }
 
 projectLink = requestLink + "/create/projectModel"
@@ -150,3 +151,49 @@ function getProjectInfo() {
   }
   xhr.send();
 }
+
+function getUsersNum() {
+  var xhr = new XMLHttpRequest();
+  var getProjectLink = requestLink + "/get/projectUserNum?project=" + pid;
+  xhr.open('GET', getProjectLink);
+  xhr.onreadystatechange = function () {
+      if (xhr.readyState !== 4) return;//忽略未完成的调用
+      if (xhr.status === 200) {
+        document.getElementById("tab_2").innerHTML = ''
+          returnData = eval('(' + xhr.responseText + ')');
+          if (returnData['code'] == '1') {
+            document.getElementById("usersNum").innerHTML = returnData['data']['number'];
+          }
+      }
+  }
+  xhr.send();
+}
+
+document.getElementById("checkUsers").addEventListener("click",function() {
+  var xhr = new XMLHttpRequest();
+  var getUsersLink = requestLink + "/get/usersList?project=" + pid;
+  xhr.open('GET', getUsersLink);
+  xhr.onreadystatechange = function () {
+      if (xhr.readyState !== 4) return;//忽略未完成的调用
+      if (xhr.status === 200) {
+        $('#userModal').modal('show');
+        userInfo = '<div class="row" style="margin-bottom:20px"><div class="col-md-1"><img width="40px" src="USER_IMAGE" class="img-circle"></div><div class="col-md-11"><div><h4><b>USER_NAME</b>USER_LABEL <div class="pull-right"><small>加入时间：USER_JOIN_TIME<small></div></h4></div></div></div>'
+        labelInfo = '<small class="label label-small bg-primary" style="font-size:8px"> 创建者 </small>'
+        returnData = eval('(' + xhr.responseText + ')');
+        if (returnData['code'] == '1') {
+          for (var i = 0; i < returnData['data'].length; i++) {
+            model = userInfo.replace(/USER_IMAGE/g,returnData['data'][i]['image']);
+            model = model.replace(/USER_NAME/g,returnData['data'][i]['name']);
+            model = model.replace(/USER_JOIN_TIME/g,returnData['data'][i]['time']);
+            if (returnData['data'][i]['relation'] == 1) {
+              model = model.replace(/USER_LABEL/g,labelInfo);
+            } else {
+              model = model.replace(/USER_LABEL/g,'');
+            }
+            document.getElementById("userList").innerHTML += model;
+          }
+        }
+      }
+  }
+  xhr.send();
+})

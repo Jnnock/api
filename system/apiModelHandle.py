@@ -16,13 +16,15 @@ class ApiSet():
         lastID = self.library.insert_id()
         if result == 1:
             apiInfo = {
-            'code':1,
-            'ID':lastID
+                'code':1,
+                'data':{
+                    'ID':lastID,
+                    'name':title,
             }
         else:
             apiInfo = {
             'code':0,
-            'ID':''
+            'data':''
             }
         return apiInfo
 

@@ -194,9 +194,9 @@
                     </div>
                     <div class="col-md-11">
                       <h1 style="font-size: 24px;margin-top:3px"><span id="projectName"></span>
-                        <div class="pull-right" style="width:240px">
+                        <div class="pull-right" style="width:365px">
                           <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-5">
                               <div class="btn-group">
                                 <button type="button" class="btn btn-default"><i class="fa fa-plus"></i> | 新建</button>
                                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -209,10 +209,13 @@
                                 </ul>
                               </div>
                             </div>
-                            <div class="col-md-6">
-                              <a class="btn btn-block btn-social btn-bitbucket">
-                                <i class="fa fa-users"></i> 用户 3
+                            <div class="col-md-4">
+                              <a class="btn btn-block btn-social btn-bitbucket" id="checkUsers">
+                                <i class="fa fa-users"></i> 成员 <span id="usersNum"></span>
                               </a>
+                            </div>
+                            <div class="col-md-3">
+                              <button type="button" class="btn btn-block btn-info"><i class="fa fa-cog"></i> 设置</button>
                             </div>
                           </div>
                         </div>
@@ -277,6 +280,33 @@
                         </div>
                     </div>
               </div>
+              <!-- 新建项目、API end -->
+              <!-- 新建项目、API -->
+              <div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="userModalLabel">
+                  <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span></button>
+                              <h4 class="modal-title">成员列表</h4>
+                          </div>
+                          <div class="modal-body">
+                            <div id="userList">
+
+                            </div>
+                            <hr>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1" id="userName">添加新成员</label>
+                                <input type="text" name="userEmail" class="form-control" id="userEmail" placeholder="邀请用户邮箱" autocomplete="off">
+                            </div>
+                            <div class="pull-right">
+                              <button type="button" class="btn btn-default" id="cancleCreate">取消</button>
+                              <button type="button" id="create" class="btn btn-primary">创建</button></div>
+                            </div>
+                          </div>
+                      </div>
+                </div>
+                <!-- 新建项目、API end -->
         </div>
         <!-- ./wrapper -->
         <!-- jQuery 3 -->
